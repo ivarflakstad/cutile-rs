@@ -1,0 +1,19 @@
+[package]
+name = "cutile-dsl"
+description = "The cuTile Rust DSL and Tile IR specifications."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+cutile-macro = { workspace = true }
+cutile-frontend = { workspace = true }
+cutile-dtype = { workspace = true }
+half = { workspace = true }
+linkme = { workspace = true }
+
+[lints]
+workspace = true

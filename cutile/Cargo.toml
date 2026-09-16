@@ -26,6 +26,8 @@ anyhow = { workspace = true }
 cuda-core = { workspace = true }
 cuda-async = { workspace = true }
 cutile-compiler = { workspace = true }
+cutile-dsl = { workspace = true }
+cutile-frontend = { workspace = true }
 cutile-macro = { workspace = true }
 cutile-ir = { workspace = true }
 linkme = { workspace = true }

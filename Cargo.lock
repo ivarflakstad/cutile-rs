@@ -448,6 +448,7 @@ dependencies = [
  "anyhow",
  "cuda-bindings",
  "cuda-core-derive",
+ "cutile-dtype",
  "half",
  "oxide-artifacts",
  "trybuild",
@@ -478,6 +479,8 @@ dependencies = [
  "cuda-async",
  "cuda-core",
  "cutile-compiler",
+ "cutile-dsl",
+ "cutile-frontend",
  "cutile-ir",
  "cutile-macro",
  "dashmap",
@@ -517,6 +520,24 @@ dependencies = [
  "cutile-ir",
  "sha2",
  "uuid",
+]
+
+[[package]]
+name = "cutile-dsl"
+version = "0.3.1"
+dependencies = [
+ "cutile-dtype",
+ "cutile-frontend",
+ "cutile-macro",
+ "half",
+ "linkme",
+]
+
+[[package]]
+name = "cutile-dtype"
+version = "0.3.1"
+dependencies = [
+ "half",
 ]
 
 [[package]]

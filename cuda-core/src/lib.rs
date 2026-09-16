@@ -9,7 +9,8 @@
 
 mod api;
 pub(crate) mod cudarc_shim;
-mod dtype;
+// Re-exported for backwards compatibility.
+pub use cutile_dtype as dtype;
 mod error;
 mod runtime;
 pub mod simt;

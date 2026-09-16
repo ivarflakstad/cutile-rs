@@ -13,6 +13,7 @@ readme = "README.md"
 cuda-bindings = { workspace = true }
 cuda-core-derive = { version = "=0.3.1", path = "../cuda-core-derive" }
 anyhow = { workspace = true }
+cutile-dtype = { workspace = true }
 half = { workspace = true }
 oxide-artifacts = { version = "0.2.1", features = ["object-read"] }
 

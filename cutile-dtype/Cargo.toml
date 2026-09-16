@@ -1,0 +1,15 @@
+[package]
+name = "cutile-dtype"
+description = "Scalar storage formats for cuTile: fp8, fp4, tf32, i4, and the DType trait."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+half = { workspace = true }
+
+[lints]
+workspace = true

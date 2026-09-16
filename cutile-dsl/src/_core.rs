@@ -354,13 +354,13 @@ pub mod core {
     }
 
     // GPU-specific types: re-exported from cuda-core.
-    pub use cuda_core::f4e2m1fn;
-    pub use cuda_core::f4e2m1fnx2;
-    pub use cuda_core::f8e4m3fn;
-    pub use cuda_core::f8e5m2;
-    pub use cuda_core::f8e8m0fnu;
-    pub use cuda_core::i4;
-    pub use cuda_core::tf32;
+    pub use cutile_dtype::f4e2m1fn;
+    pub use cutile_dtype::f4e2m1fnx2;
+    pub use cutile_dtype::f8e4m3fn;
+    pub use cutile_dtype::f8e5m2;
+    pub use cutile_dtype::f8e8m0fnu;
+    pub use cutile_dtype::i4;
+    pub use cutile_dtype::tf32;
 
     #[cuda_tile::ty(name = "tf32")]
     impl ElementType for tf32 {

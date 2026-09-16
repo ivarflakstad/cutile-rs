@@ -12,6 +12,12 @@ members = [
     # Async CUDA API. Uses cuda-core.
     "cuda-async",
 
+    # Scalar storage formats (fp8, fp4, tf32, i4) and the DType bound.
+    "cutile-dtype",
+
+    # The DSL surface a kernel body is written against. No CUDA.
+    "cutile-dsl",
+
     # cuTile Rust compiler frontend. DSL to IR. Requires cutile-ir.
     "cutile-frontend",
 
@@ -50,6 +56,8 @@ members = [
 
 default-members = [
     "cutile-obligation",
+    "cutile-dtype",
+    "cutile-dsl",
     "cutile-frontend",
     "cuda-bindings",
     "cuda-core",
@@ -115,6 +123,8 @@ cuda-async = { path = "cuda-async", version = "=0.3.1" }
 cutile-obligation = { path = "cutile-obligation", version = "=0.3.1" }
 cutile-syn-utils = { path = "cutile-syn-utils", version = "=0.3.1" }
 cutile-expand = { path = "cutile-expand", version = "=0.3.1" }
+cutile-dtype = { path = "cutile-dtype", version = "=0.3.1" }
+cutile-dsl = { path = "cutile-dsl", version = "=0.3.1" }
 cutile-frontend = { path = "cutile-frontend", version = "=0.3.1" }
 cutile-compiler = { path = "cutile-compiler", version = "=0.3.1" }
 cutile-macro = { path = "cutile-macro", version = "=0.3.1" }

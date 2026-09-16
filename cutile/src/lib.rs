@@ -42,7 +42,7 @@
 //! #[cutile::module]
 //! mod kernels {
 //!     use cutile::core::*;
-//!     
+//!
 //!     #[cutile::entry]
 //!     fn vector_add<T: ElementType, const N: i32>(
 //!         z: &mut Tensor<T, {[N]}>,
@@ -163,11 +163,9 @@
 //! For tutorials, the DSL reference, and the execution model, see the
 //! [cuTile Rust Book](https://nvlabs.github.io/cutile-rs/).
 
-pub mod _core;
-pub mod _tileir;
+// Re-export for backwards compatibility.
+pub use cutile_dsl::{_core, _tileir, core, tileir};
 pub mod error;
-pub use _core::core;
-pub use _tileir::tileir;
 
 // LINKING Phase B: register an additional registry entry at the public
 // `cutile::core` path so kernel `use cutile::core::*` statements resolve
@@ -208,6 +206,7 @@ pub use cutile_compiler::compile_api;
 /// Opt-in persistent on-disk cubin cache. Off by default; enable
 /// explicitly via [`jit_cache::enable_default`] or [`jit_cache::enable`].
 pub use cutile_compiler::jit_cache;
+pub use cutile_frontend;
 pub use cutile_macro::module;
 pub use half;
 pub use num_traits;
