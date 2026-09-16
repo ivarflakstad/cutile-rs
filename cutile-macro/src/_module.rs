@@ -73,7 +73,7 @@ use crate::rank_instantiation::*;
 use crate::shadow_dispatch::{
     desugar_variadic_trait_decl, desugar_variadic_trait_impl, emit_shadow_dispatch,
 };
-use crate::validate_dsl_syntax::validate_entry_point_parameters;
+use crate::validate_dsl_syntax::{validate_entry_attribute, validate_entry_point_parameters};
 use cutile_frontend::kernel_naming::KernelNaming;
 use cutile_frontend::syn_utils::*;
 
@@ -739,102 +739,6 @@ pub fn function(
 /// ## Entry Attributes
 ///
 /// Respects `#[entry(print_ir = true)]` to print the generated launcher code.
-/// Value kinds `#[cutile::entry(..)]` keys accept.
-#[derive(Clone, Copy)]
-enum EntryValueKind {
-    /// A `true` / `false` literal.
-    Bool,
-    /// A string literal.
-    Str,
-    /// An expression its consumer parses itself (`preconditions`,
-    /// `optimization_hints`), validated there.
-    Expr,
-}
-
-/// Every key `#[cutile::entry(..)]` honors, with the value kind it expects.
-///
-/// The JIT looks keys up by name and reads them as literals at first launch
-/// (`SingleMetaList::parse_bool` / `parse_string`), so a misspelled key was
-/// silently ignored and a non-literal value panicked at runtime. Both are
-/// checked here, at expansion, with a span on the offending token.
-const ENTRY_KEYS: &[(&str, EntryValueKind)] = &[
-    ("print_ir", EntryValueKind::Bool),
-    ("dump_mlir_dir", EntryValueKind::Str),
-    ("unchecked_accesses", EntryValueKind::Bool),
-    ("deny_in_kernel_checks", EntryValueKind::Bool),
-    ("preconditions", EntryValueKind::Expr),
-    ("optimization_hints", EntryValueKind::Expr),
-];
-
-fn validate_entry_attribute(item: &ItemFn) -> Result<(), Error> {
-    let Some(attr) = get_attribute("entry", &item.attrs, true) else {
-        return Ok(());
-    };
-    // The bare form `#[cutile::entry]` has nothing to check.
-    let syn::Meta::List(list) = &attr.meta else {
-        return Ok(());
-    };
-    let entries = list
-        .parse_args_with(syn::punctuated::Punctuated::<syn::Meta, syn::Token![,]>::parse_terminated)
-        .map_err(|e| {
-            crate::error::syn_err(
-                e.span(),
-                &format!("malformed `#[cutile::entry(..)]` arguments: {e}"),
-            )
-        })?;
-    for meta in &entries {
-        // `key = value`, or a bare boolean key (`unchecked_accesses`), which
-        // the JIT reads as `true`.
-        let (path, value) = match meta {
-            syn::Meta::NameValue(name_value) => (&name_value.path, Some(&name_value.value)),
-            syn::Meta::Path(path) => (path, None),
-            syn::Meta::List(list) => {
-                return list.err(
-                    "`#[cutile::entry(..)]` arguments must be `key = value` pairs or bare \
-                     boolean keys",
-                );
-            }
-        };
-        let Some(key) = path.get_ident().map(ToString::to_string) else {
-            return path.err("`#[cutile::entry(..)]` keys must be plain identifiers");
-        };
-        let Some((_, kind)) = ENTRY_KEYS.iter().find(|(known, _)| *known == key) else {
-            let known = ENTRY_KEYS
-                .iter()
-                .map(|(k, _)| format!("`{k}`"))
-                .collect::<Vec<_>>()
-                .join(", ");
-            return path.err(&format!(
-                "unknown `#[cutile::entry]` key `{key}`; expected one of {known}"
-            ));
-        };
-        let Some(value) = value else {
-            if matches!(kind, EntryValueKind::Bool) {
-                continue;
-            }
-            return path.err(&format!("`{key}` requires a value (`{key} = ...`)"));
-        };
-        let literal = match value {
-            syn::Expr::Lit(lit) => Some(&lit.lit),
-            _ => None,
-        };
-        match (kind, literal) {
-            (EntryValueKind::Bool, Some(syn::Lit::Bool(_))) => {}
-            (EntryValueKind::Bool, _) => {
-                return value.err(&format!(
-                    "`{key}` expects a boolean literal (`true` or `false`)"
-                ));
-            }
-            (EntryValueKind::Str, Some(syn::Lit::Str(_))) => {}
-            (EntryValueKind::Str, _) => {
-                return value.err(&format!("`{key}` expects a string literal"));
-            }
-            (EntryValueKind::Expr, _) => {}
-        }
-    }
-    Ok(())
-}
-
 pub fn kernel_launcher(
     module_ident: &Ident,
     item: &ItemFn,
