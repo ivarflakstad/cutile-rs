@@ -414,7 +414,7 @@ dependencies = [
 
 [[package]]
 name = "cuda-async"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "anyhow",
  "cuda-bindings",
@@ -431,7 +431,7 @@ dependencies = [
 
 [[package]]
 name = "cuda-bindings"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "bindgen 0.69.5",
  "libloading",
@@ -443,7 +443,7 @@ dependencies = [
 
 [[package]]
 name = "cuda-core"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "anyhow",
  "cuda-bindings",
@@ -456,7 +456,7 @@ dependencies = [
 
 [[package]]
 name = "cuda-core-derive"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -465,7 +465,7 @@ dependencies = [
 
 [[package]]
 name = "cuda-tile-rs"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "bindgen 0.71.1",
  "cmake",
@@ -473,7 +473,7 @@ dependencies = [
 
 [[package]]
 name = "cutile"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "anyhow",
  "cuda-async",
@@ -500,7 +500,7 @@ dependencies = [
 
 [[package]]
 name = "cutile-benchmarks"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "criterion",
  "cuda-async",
@@ -512,7 +512,7 @@ dependencies = [
 
 [[package]]
 name = "cutile-compiler"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "cuda-async",
  "cuda-core",
@@ -524,7 +524,7 @@ dependencies = [
 
 [[package]]
 name = "cutile-dsl"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "cutile-dtype",
  "cutile-frontend",
@@ -535,14 +535,14 @@ dependencies = [
 
 [[package]]
 name = "cutile-dtype"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "half",
 ]
 
 [[package]]
 name = "cutile-examples"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "candle-core",
  "candle-nn",
@@ -557,7 +557,7 @@ dependencies = [
 
 [[package]]
 name = "cutile-expand"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "cutile-syn-utils",
  "proc-macro2",
@@ -567,7 +567,7 @@ dependencies = [
 
 [[package]]
 name = "cutile-frontend"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "anyhow",
  "cutile-ir",
@@ -585,7 +585,7 @@ dependencies = [
 
 [[package]]
 name = "cutile-ir"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "half",
  "indexmap",
@@ -594,7 +594,7 @@ dependencies = [
 
 [[package]]
 name = "cutile-kernels"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "cutile",
  "cutile-compiler",
@@ -602,7 +602,7 @@ dependencies = [
 
 [[package]]
 name = "cutile-macro"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "convert_case",
  "cutile-expand",
@@ -618,11 +618,11 @@ dependencies = [
 
 [[package]]
 name = "cutile-obligation"
-version = "0.3.1"
+version = "0.4.0"
 
 [[package]]
 name = "cutile-syn-utils"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "prettyplease",
  "proc-macro2",
