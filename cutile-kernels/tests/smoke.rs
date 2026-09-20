@@ -59,6 +59,23 @@ fn compile_cases(cases: Vec<SmokeCase>) {
                     "{} emitted invalid TileIR bytecode magic",
                     case.name
                 );
+                // Byte-identical read round-trip: the reader must reconstruct
+                // a module that re-serializes to exactly the same bytes.
+                let (rebuilt, read_version) = cutile_ir::read_bytecode_versioned(&bytecode)
+                    .unwrap_or_else(|err| panic!("{} bytecode read failed: {err}", case.name));
+                let rebuilt_bytes =
+                    cutile_ir::bytecode::write_bytecode_version(&rebuilt, read_version)
+                        .unwrap_or_else(|err| {
+                            panic!("{} re-serialization failed: {err}", case.name)
+                        });
+                assert_eq!(
+                    rebuilt_bytes,
+                    bytecode,
+                    "{} read/write round-trip is not byte-identical ({} vs {} bytes)",
+                    case.name,
+                    rebuilt_bytes.len(),
+                    bytecode.len()
+                );
             }
         })
         .expect("spawn smoke test thread")
