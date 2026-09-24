@@ -144,8 +144,8 @@ impl Default for CompileOptions {
             max_divisibility: None,
             num_worker_warps_per_cta: None,
             opt_level: None,
-            device_debug: env!("CUTILE_BUILD_DEBUG_INFO") == "full",
-            lineinfo: env!("CUTILE_BUILD_DEBUG_INFO") == "line",
+            device_debug: option_env!("CUTILE_BUILD_DEBUG_INFO").unwrap_or_default() == "full",
+            lineinfo: option_env!("CUTILE_BUILD_DEBUG_INFO").unwrap_or_default() == "line",
             sanitize_memcheck: false,
         }
     }
